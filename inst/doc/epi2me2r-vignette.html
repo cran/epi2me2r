@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Maggie Weinroth" />
+
+
+<title>epi2me2r vignette</title>
+
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">epi2me2r vignette</h1>
+<h4 class="author">Maggie Weinroth</h4>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(epi2me2r)</span></code></pre></div>
+<p>The <code>epi2me2r</code> package includes fully automated methods to take raw CSVs of CARD ARMA and WIMP output from the EPI2ME pipeline from <a href="https://nanoporetech.com/">Oxford Nanopore</a> and quickly convert it into common R package formats, namely <a href="https://joey711.github.io/phyloseq/">phyloseq</a> and <a href="https://www.bioconductor.org/packages/release/bioc/html/metagenomeSeq.html">metagenomeSeq</a>.</p>
+<p>There are three main types of functions in <code>epi2me2r</code>:</p>
+<ul>
+<li><strong>fully automated</strong>: these functions take minimal input (just raw CSV files and metadata) and produce either <code>phyloseq</code> or <code>metagenomeSeq</code> objects for downstream analysis:
+<ul>
+<li><code>amr_raw_to_phyloseq()</code></li>
+<li><code>amr_raw_to_metagenomeseq()</code></li>
+<li><code>wimp_raw_to_phyloseq()</code></li>
+<li><code>wimp_raw_to_metagenomeseq()</code></li>
+</ul></li>
+<li><strong>step-by-step</strong>: If you need output from an intermediate step, you can these functions to generate only what you need:
+<ul>
+<li><code>read_in_amr_files()</code></li>
+<li><code>read_in_wimp_files()</code></li>
+<li><code>generate_amr_taxonomy()</code></li>
+<li><code>generate_wimp_taxonomy()</code></li>
+</ul></li>
+<li><strong>other</strong>: An additional function we created but does not fit into the main workflows is <code>amr_read_taxonomy()</code>. This function reads in both AMR and WIMP raw data and adds the taxonomic information to the AMR gene if available.</li>
+</ul>
+<div id="preparation-of-metadata-file" class="section level2">
+<h2>Preparation of metadata file</h2>
+<p>Prior to starting, making sure the metadata file is formatted appropriately will ensure your data is imported correctly. You can use one combined metadata file for both your AMR and WIMP samples or a separate file for each. Both options are described below.</p>
+<div id="combo-metadata-file" class="section level4">
+<h4>Combo metadata file</h4>
+<p>This file has <strong>4</strong> required columns that must be named as follows:</p>
+<ul>
+<li><code>arma_filename</code> : the original amr file name without the <code>.csv</code> extension</li>
+<li><code>arma_barcode</code> : the barcodes of each sample (note: if you did not barcode any of your samples, enter <code>none</code> in all of the cells). <strong>In the AMR workflow, missing barcodes are coded as <code>none</code></strong></li>
+<li><code>wimp_filename</code> : the original amr file name without the <code>.csv</code> extension</li>
+<li><code>wimp_barcode</code> : the barcodes of each sample (note: if you did not barcode any of your samples, enter <code>NA</code> in all of the cells). <strong>In the WIMP workflow, missing barcodes are coded as <code>NA</code></strong></li>
+<li><code>additional information</code> after these four required columns, you may include any additional metadata that is important, such as treatment type, sample numbers, etc.</li>
+</ul>
+<p>An example of a combo metadata file is included with this package.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>epi2me.metadata <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;example_metadata.csv&quot;</span>, <span class="at">package =</span> <span class="st">&quot;epi2me2r&quot;</span>))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(epi2me.metadata)</span></code></pre></div>
+<pre><code>##   arma_filename wimp_filename arma_barcode wimp_barcode Samplename  treatment
+## 1   arma_288715   324212_1777    barcode02    barcode02    Animal1    control
+## 2   arma_288715   324212_1777    barcode03    barcode03    Animal2 antibiotic
+## 3   arma_288715   324212_1777    barcode04    barcode04    Animal3    control
+## 4   arma_288716   324212_1778         none         &lt;NA&gt;    Animal4 antibiotic</code></pre>
+</div>
+<div id="individual-metadata-file" class="section level4">
+<h4>Individual metadata file</h4>
+<p>If you are just importing WIMP or CARD ARMA files, you do not need all the metadata associated with the other workflow.</p>
+<p>If you are just processing <strong>ARMA CARD</strong> data, the required columns are: * <code>arma_filename</code> * <code>arma_barcode</code> * other metadata such as treatment and sample names</p>
+<p>On the other hand, if you are just processing <strong>WIMP</strong> data the required columns are: * <code>wimp_filename</code> * <code>wimp_barcode</code> * other metadata such as treatment and sample names</p>
+<p>Even if you are just processing one type of data, both ARMA and WIMP information can be included in the metadata (as seen in the section on combo metadata above).</p>
+</div>
+</div>
+<div id="fully-automated-data-import" class="section level2">
+<h2>Fully automated data import</h2>
+<p>For both AMR and WIMP data, the raw CSVs downloaded from the epi2me website need to be in their own directory (without any other files). Note that if you are processing both WIMP and ARMA data you will need <strong>two</strong> directories, one for each set of data.</p>
+<div id="amr-data" class="section level3">
+<h3>AMR data</h3>
+<div id="amr_raw_to_phyloseq" class="section level4">
+<h4>amr_raw_to_phyloseq</h4>
+<p>Reading the AMR data requires a directory and a metadata file. The directory should have only the CSV files generated by EPI2ME in it. An example of the metadata file is above. The data we will be using is from an example run on the EPI2ME pipeline. There are four options:</p>
+<ul>
+<li><code>path.to.amr.files</code> <em>required</em>: the path to the raw CSV files (for example <code>&quot;Desktop/raw_data/&quot;</code>)</li>
+<li><code>metadata</code> <em>required</em>: metadata formatted as described above as a <code>data.frame</code></li>
+<li><code>coveragenumber</code> <em>optional</em> : the total length of the gene that must be present for it to be included in the count table. The default is 80%; this argument takes any number from 1 to 99. Default is <code>80</code>.</li>
+<li><code>keepSNP</code> <em>optional</em> : whether to include genes that are considered resistance genes only with a SNP mutation. Default is <code>FALSE</code> (does not include these genes) but can be changed to <code>TRUE</code> to include these genes.</li>
+</ul>
+<p>In the following code example, we use the <code>amr_raw_to_phyloseq()</code> function and the included example metadata file read in above, as well as a directory containing example AMR files also included with the <code>epi2me2r</code> package. This code creates a <code>phyloSeq</code> object from the example AMR files and metadata.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>example.amr.dir <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;example_amr_data&quot;</span>, <span class="at">package =</span> <span class="st">&quot;epi2me2r&quot;</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>ps.amr.object <span class="ot">&lt;-</span> <span class="fu">amr_raw_to_phyloseq</span>(<span class="at">path.to.amr.files =</span> example.amr.dir,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">metadata =</span> epi2me.metadata,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">coveragenumber =</span> <span class="dv">80</span>, </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">keepSNP =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## Reading in raw AMR files from C:/Users/qdread/AppData/Local/Temp/RtmpSCYKke/Rinst14fc4d0559bb/epi2me2r/extdata/example_amr_data</code></pre>
+</div>
+<div id="amr_raw_to_metagenomeseq" class="section level4">
+<h4>amr_raw_to_metagenomeseq</h4>
+<p>The <code>amr_raw_to_metagenomeseq()</code> function uses the same arguments as above for importing to <code>metagenomeSeq</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mgs.amr.object <span class="ot">&lt;-</span> <span class="fu">amr_raw_to_metagenomeseq</span>(<span class="at">path.to.amr.files =</span> example.amr.dir,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">metadata =</span> epi2me.metadata,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">coveragenumber =</span> <span class="dv">80</span>, </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">keepSNP =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## Reading in raw AMR files from C:/Users/qdread/AppData/Local/Temp/RtmpSCYKke/Rinst14fc4d0559bb/epi2me2r/extdata/example_amr_data</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mgs.amr.object</span></code></pre></div>
+<pre><code>## MRexperiment (storageMode: environment)
+## assayData: 67 features, 4 samples 
+##   element names: counts 
+## protocolData: none
+## phenoData
+##   sampleNames: arma_288715_barcode02 arma_288715_barcode03
+##     arma_288715_barcode04 arma_288716_none
+##   varLabels: arma_filename wimp_filename ... sampleID (7 total)
+##   varMetadata: labelDescription
+## featureData
+##   featureNames: sp1 sp2 ... sp67 (67 total)
+##   fvarLabels: OTUname CVTERMID ... ARO.Name (6 total)
+##   fvarMetadata: labelDescription
+## experimentData: use &#39;experimentData(object)&#39;
+## Annotation:</code></pre>
+</div>
+</div>
+<div id="wimp" class="section level3">
+<h3>WIMP</h3>
+<div id="wimp_raw_to_phyloseq" class="section level4">
+<h4>wimp_raw_to_phyloseq</h4>
+<p>WIMP files are similar to the AMR files but use the package <a href="https://github.com/sherrillmix/taxonomizr">taxonomizr</a> to add taxonomic hierarchical information.</p>
+<p>Reading in the WIMP data requires a directory and a metadata file. The directory should have only the CSV files generated by EPI2ME in it. An example of the metadata file is above. The data we will be using is from an example run on the EPI2ME pipeline. There are four options:</p>
+<ul>
+<li><code>path.to.wimp.files</code> <em>required</em>: the path to the raw CSV files (for example <code>&quot;Desktop/raw_data/&quot;</code>)</li>
+<li><code>metadata</code> <em>required</em>: metadata formatted as described above as a <code>data.frame</code></li>
+<li><code>keep.unclassified</code> <em>optional</em> : whether to keep genes that do not classify or do not classify beyond a superkingdom. Default is <code>FALSE</code> (does not include these reads) but can be changed to <code>TRUE</code> to include these reads</li>
+<li><code>keep.human</code> <em>optional</em> : whether to keep reads associated with <em>Homo sapiens</em> (usually considered a contaminant in microbiome data). Default is <code>FALSE</code> (does not include human-associated reads) but can be changed to <code>TRUE</code> to include these reads.</li>
+</ul>
+<p>The following code uses the <code>wimp_raw_to_phyloseq()</code> function and the example metadata we read in above as well as a directory of example WIMP files included with the package to convert the raw WIMP files to a <code>phyloSeq</code> object:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>example.wimp.dir <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;example_wimp_data&quot;</span>, <span class="at">package =</span> <span class="st">&quot;epi2me2r&quot;</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>ps.wimp.object <span class="ot">&lt;-</span> <span class="fu">wimp_raw_to_phyloseq</span>(<span class="at">path.to.wimp.files =</span> example.wimp.dir,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">metadata =</span> epi2me.metadata,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">keep.unclassified =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">keep.human =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+</div>
+<div id="wimp_raw_to_metagenomeseq" class="section level4">
+<h4>wimp_raw_to_metagenomeseq</h4>
+<p>Like the functions for AMR, the <code>wimp_raw_to_metagenomeSeq()</code> function uses the same arguments for importing to <code>metagenomeSeq</code> are used as were used above in the <code>wimp_raw_to_phyloseq()</code> function:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>mgs.wimp.object <span class="ot">&lt;-</span> <span class="fu">wimp_raw_to_metagenomeseq</span>(<span class="at">path.to.wimp.files =</span> example.wimp.dir,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">metadata =</span> epi2me.metadata,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">keep.unclassified =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">keep.human =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="step-by-step-import" class="section level2">
+<h2>Step-by-step import</h2>
+<p>In some cases you might not want a <code>phyloseq</code> or <code>metagenomeSeq</code> object, but instead just a count matrix or taxonomic list. In these cases you can use the below functions.</p>
+<div id="amr-data-1" class="section level3">
+<h3>AMR data</h3>
+<div id="read_in_amr_file" class="section level4">
+<h4>read_in_amr_file</h4>
+<p>This takes the directory that the AMR CSV files are in and creates a count matrix that can be used in downstream analysis. The inputs are similar to those in the previous examples (but metadata is not required):</p>
+<ul>
+<li><code>path.to.amr.files</code> <em>required</em>: the path to the raw CSV files (for example <code>&quot;Desktop/raw_data/&quot;</code>)</li>
+<li><code>coveragenumber</code> <em>optional</em> : the total length of the gene that must be present for it to be included in the count table. The default is 80%; this argument takes any number from 1 to 99. Default is <code>80</code>.</li>
+<li><code>keepSNP</code> <em>optional</em> : whether to include genes that are considered resistance genes only with a SNP mutation. Default is <code>FALSE</code> (does not include these genes) but can be changed to <code>TRUE</code> to include these genes.</li>
+</ul>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>amr.count.table <span class="ot">&lt;-</span> <span class="fu">read_in_amr_files</span>(<span class="at">path.to.amr.files =</span> example.amr.dir,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">coveragenumber =</span> <span class="dv">80</span>, </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">keepSNP =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## Reading in raw AMR files from C:/Users/qdread/AppData/Local/Temp/RtmpSCYKke/Rinst14fc4d0559bb/epi2me2r/extdata/example_amr_data</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(amr.count.table)</span></code></pre></div>
+<pre><code>##    CVTERMID arma_288715_barcode02 arma_288715_barcode03 arma_288715_barcode04
+## 1:    36033                     5                     1                     1
+## 2:    36036                     0                     0                     1
+## 3:    36213                     0                     1                     1
+## 4:    36355                     3                     2                     3
+## 5:    36376                     0                     0                     0
+## 6:    36448                     2                     0                     0
+##    arma_288716_none
+## 1:                3
+## 2:                0
+## 3:                1
+## 4:                1
+## 5:                1
+## 6:                1</code></pre>
+</div>
+<div id="generate_amr_taxonomy" class="section level4">
+<h4>generate_amr_taxonomy</h4>
+<p>This function assigns AMR taxonomic hierarchical information from <a href="https://card.mcmaster.ca/">CARD</a> using a count table with CV TERM ID’s as the first column (<code>&quot;CVTERMID&quot;</code>). Only one input is needed:</p>
+<ul>
+<li><code>amr.count.table</code> <em>required</em>: data frame of generated with <code>amr.count.table</code> or that has <code>CVTERMID</code> as the first column for AMR taxonomic assignment</li>
+<li><code>verbose</code> <em>optional</em> : only a subset of column names are included in the output by default: (<code>CVTERMID</code>,<code>Drug Class</code>, <code>AMR Gene Family</code>, <code>Resistance Mechanism</code>, and <code>ARO Name</code>). If <code>verbose==TRUE</code> 13 columns are returned.</li>
+</ul>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>amr.taxonomy <span class="ot">&lt;-</span> <span class="fu">generate_amr_taxonomy</span>(<span class="at">amr.count.table =</span> amr.count.table,</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(amr.taxonomy)</span></code></pre></div>
+<pre><code>##    CVTERMID
+## 1:    36033
+## 2:    36036
+## 3:    36213
+## 4:    36355
+## 5:    36376
+## 6:    36448
+##                                                                                                                                                                                                                                                        Drug Class
+## 1:                                                                                                                                                                                                                                     fluoroquinolone antibiotic
+## 2:                                                                                                                                                                                                                                     fluoroquinolone antibiotic
+## 3:                                                                                                                                                                                                                                     fluoroquinolone antibiotic
+## 4:                                                                                                                        cephalosporin;fluoroquinolone antibiotic;glycylcycline;penam;phenicol antibiotic;rifamycin antibiotic;tetracycline antibiotic;triclosan
+## 5: aminocoumarin antibiotic;aminoglycoside antibiotic;carbapenem;cephalosporin;cephamycin;fluoroquinolone antibiotic;glycylcycline;macrolide antibiotic;penam;penem;peptide antibiotic;phenicol antibiotic;rifamycin antibiotic;tetracycline antibiotic;triclosan
+## 6:                                                                                                                                                                                                                                                            N/A
+##                                                                                                                                                                  AMR Gene Family
+## 1:                                                                                                                             ATP-binding cassette (ABC) antibiotic efflux pump
+## 2:                                                                                                                    major facilitator superfamily (MFS) antibiotic efflux pump
+## 3:                                                                                                                    major facilitator superfamily (MFS) antibiotic efflux pump
+## 4:                                                                                                              resistance-nodulation-cell division (RND) antibiotic efflux pump
+## 5: ATP-binding cassette (ABC) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump
+## 6:                                                                                                                    major facilitator superfamily (MFS) antibiotic efflux pump
+##    Resistance Mechanism ARO Name
+## 1:    antibiotic efflux     patA
+## 2:    antibiotic efflux     emrA
+## 3:    antibiotic efflux     emrB
+## 4:    antibiotic efflux     acrB
+## 5:    antibiotic efflux     TolC
+## 6:    antibiotic efflux     emrD</code></pre>
+</div>
+</div>
+<div id="wimp-data" class="section level3">
+<h3>WIMP data</h3>
+<div id="read_in_wimp_file" class="section level4">
+<h4>read_in_wimp_file</h4>
+<p>This takes the directory the WIMP CSV files are in and creates a count matrix that can be used in downstream analysis. The inputs are similar to those in the previous examples (but metadata is not required):</p>
+<ul>
+<li><code>path.to.wimp.files</code> <em>required</em>: the path to the raw CSV files (for example <code>&quot;Desktop/raw_data/&quot;</code>)</li>
+</ul>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>example.wimp.dir <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;example_wimp_data&quot;</span>, <span class="at">package =</span> <span class="st">&quot;epi2me2r&quot;</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>wimp.count.table <span class="ot">&lt;-</span> <span class="fu">read_in_wimp_files</span>(<span class="at">path.to.wimp.files =</span> example.wimp.dir)</span></code></pre></div>
+<pre><code>## Reading in raw WIMP files from C:/Users/qdread/AppData/Local/Temp/RtmpSCYKke/Rinst14fc4d0559bb/epi2me2r/extdata/example_wimp_data</code></pre>
+<pre><code>## The percentage of classified reads was 94.4</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(wimp.count.table)</span></code></pre></div>
+<pre><code>##    taxID 324212_1777_barcode02 324212_1777_barcode03 324212_1777_barcode04
+## 1:     0                     9                     6                     6
+## 2:   286                     3                     0                     0
+## 3:   287                     8                     9                    11
+## 4:   543                     2                     1                     2
+## 5:   544                     0                     0                     1
+## 6:   561                     0                     0                     0
+##    324212_1778_NA
+## 1:              7
+## 2:              1
+## 3:             16
+## 4:              0
+## 5:              0
+## 6:              1</code></pre>
+</div>
+<div id="generate_wimp_taxonomy" class="section level4">
+<h4>generate_wimp_taxonomy</h4>
+<p>This function assigns phylogenetic taxonomic hierarchical information with the help of <code>taxonomizr</code>. A count table with NCBI taxonomic ID’s (<code>&quot;taxID&quot;</code>) as the first column is required.</p>
+<ul>
+<li><code>wimp.count.table</code> <em>required</em>: data frame generated with <code>wimp.count.table</code> or that has <code>&quot;taxID&quot;</code> as the first column for phylogenetic taxonomic assignment</li>
+</ul>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>wimp.taxonomy <span class="ot">&lt;-</span> <span class="fu">generate_wimp_taxonomy</span>(<span class="at">wimp.count.table =</span> wimp.count.table)</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="other-functions" class="section level2">
+<h2>Other functions</h2>
+<p>Another useful function is <code>amr_read_taxonomy</code>, which matches any classified AMR read with the phylogenetic taxonomy (if it is assigned) using <code>read_id()</code>. This function takes the following arguments:</p>
+<ul>
+<li><code>path.to.amr.files</code> <em>required</em>: the path to the raw AMR CSV files (for example <code>&quot;Desktop/raw_amr_data/&quot;</code>)</li>
+<li><code>path.to.wimp.files</code> <em>required</em>: the path to the raw WIMP CSV files (for example <code>&quot;Desktop/raw_wimp_data/&quot;</code>)</li>
+<li><code>coveragenumber</code> <em>optional</em> : the total length of the gene that must be present for it to be included in the count table. The default is 80%; this argument takes any number from 1 to 99. Default is <code>80</code>.</li>
+</ul>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>amr.read.classification <span class="ot">&lt;-</span> <span class="fu">amr_read_taxonomy</span>(<span class="at">path.to.amr.files =</span> example.amr.dir,</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">path.to.wimp.files =</span> example.wimp.dir)</span></code></pre></div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
